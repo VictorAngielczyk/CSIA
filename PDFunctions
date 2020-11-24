@@ -1,0 +1,25 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+/**
+ *
+ * @author vangielczyk
+ */
+public class PDFuntions {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+        List<File> FileList = new ArrayList<File>();
+        File file1 = new File("H:\\Chapter_5_Pre-Test.pdf");
+        File file2 = new File("H:\\Chapter_6_Pre-Test.pdf");
+        FileList.add(file1);
+        FileList.add(file2);
+        String destination = "H:\\";
+        MergePDF merge = new MergePDF();
+        boolean check = merge.Merge(destination,FileList);
+        if(!check)System.out.println("error");
+    }
+    
+}
