@@ -7,13 +7,13 @@ import org.apache.pdfbox.multipdf.Splitter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 
 public class SplitPDF {
-    public static boolean split(String destination, File toSplit) throws java.io.IOException
+    public static void split(String destination, File toSplit) throws java.io.IOException
     {
         try
         {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMDDYYYY-HHmmss");
+            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-YYYY_HHmmss");
 
-            LocalDateTime now = LocalDateTime.now();
+            //LocalDateTime now = LocalDateTime.now();
 
             String fileName = toSplit.getName().replaceFirst("[.][^.]+$", "");
 
@@ -25,10 +25,19 @@ public class SplitPDF {
 
             Iterator<PDDocument> iterator = split.listIterator();
 
+            File outputDirectory = new File(destination + "\\" + fileName);
+
+            outputDirectory.mkdir();
+
             for (int i = 1; iterator.hasNext(); i++)
             {
                 PDDocument toSave = iterator.next();
-                toSave.save(destination + "\\" + fileName + dtf.format(now) + "\\" + i);
+
+                File saveFile = new File(destination + "\\" + fileName + "\\" + i +".pdf");
+
+                saveFile.createNewFile();
+
+                toSave.save(destination + "\\" + fileName + "\\" + i +".pdf");
             }
 
             doc.close();
@@ -36,8 +45,6 @@ public class SplitPDF {
         } catch(Exception e) 
         {
             System.out.println("Error! " + e);
-            return false;
         }
-        return true;
     }
 }

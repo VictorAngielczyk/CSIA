@@ -7,17 +7,19 @@ import org.apache.pdfbox.io.MemoryUsageSetting;
 
 public class MergePDF
 {
-    public static boolean Merge(String destination, List<File> FileList) throws java.io.FileNotFoundException, java.io.IOException
+    public static File Merge(String destination, List<File> FileList) throws java.io.FileNotFoundException, java.io.IOException
     {
         try
         {
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddYYYY-HHmmss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-YYYY_HHmmss");
 
             LocalDateTime now = LocalDateTime.now();
 
             PDFMergerUtility merger = new PDFMergerUtility();
 
-            merger.setDestinationFileName(destination + "mergedOn" + dtf.format(now) + ".pdf" );
+            File output = new File(destination + dtf.format(now) + ".pdf");
+
+            merger.setDestinationFileName(output.getPath());
 
             for (int i = 0; i < FileList.size(); i++){
                 merger.addSource(FileList.get(i));
@@ -25,11 +27,12 @@ public class MergePDF
 
             merger.mergeDocuments(MemoryUsageSetting.setupMainMemoryOnly());
 
+            return output;
+
         } catch(Exception e) 
         {
             System.out.println("Error! " + e);
-            return false;
         }
-        return true;
+        return null;
     }
 }
