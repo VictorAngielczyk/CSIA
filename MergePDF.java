@@ -17,7 +17,7 @@ public class MergePDF
 
             PDFMergerUtility merger = new PDFMergerUtility();
 
-            File output = new File(destination + dtf.format(now) + ".pdf");
+            File output = new File(destination + (FileList.get(0).getName()).replace(".pdf","") + "-" + dtf.format(now) + ".pdf");
 
             merger.setDestinationFileName(output.getPath());
 
