@@ -27,7 +27,7 @@ public class SplitPDF {
 
             File outputDirectory = new File(destination + "\\" + fileName);
 
-            outputDirectory.mkdir();
+            if(!Files.exists(outputDirectory.path) outputDirectory.mkdir();
 
             for (int i = 1; iterator.hasNext(); i++)
             {
